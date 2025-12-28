@@ -16,6 +16,8 @@ CHOSEN_COLOR = "#0C7C59"
 
 
 def plot_event(event, events=None):
+    """Plot pitch for event"""
+
     enriched_tracking_data = load_tracking_data(event.match_id.iloc[0])
 
     synced = event.merge(
@@ -85,12 +87,8 @@ def plot_event(event, events=None):
         current_passing_x = []
         current_passing_y = []
         for id in associated_events.index:
-            # match_id = associated_events.loc[id]['match_id']
-            # event_id = associated_events.loc[id]['event_id']
             event_type = associated_events.loc[id]['event_type']
             player_id = associated_events.loc[id]['player_id']
-            # frame_start = associated_events.loc[id]['frame_start']
-            # frame_end = associated_events.loc[id]['frame_end']
             xt_value = associated_events.loc[id]['xthreat']
             xpass_completion = round(
                 associated_events.loc[id]['xpass_completion'] * 100, 1)

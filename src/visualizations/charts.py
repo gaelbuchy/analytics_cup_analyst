@@ -11,6 +11,7 @@ secondary_color = "#ED254E"
 
 
 def add_completion_colors(colors, df, metric):
+    """Add colors for completion rate"""
     for comp_rate in df[metric]:
         if comp_rate > 75:
             colors.append('#66BB6A')
@@ -21,6 +22,7 @@ def add_completion_colors(colors, df, metric):
 
 
 def get_completion_legend(label):
+    """Setup legend for completion rate"""
     color_legend = {
         'label': label,
         'colors': [
@@ -33,6 +35,7 @@ def get_completion_legend(label):
 
 
 def get_colors(player_metrics_df, color_by):
+    """Get colors for scatter plots"""
     color_legend = None
 
     if 'Completion Rate' in color_by:
@@ -92,6 +95,8 @@ def create_tops_bar_chart(player_metrics_df,
                           title="",
                           xaxis="",
                           n=10):
+    """Create tops bar chart"""
+
     top_players = player_metrics_df.nlargest(n, metric)
 
     fig = go.Figure()
@@ -183,10 +188,7 @@ def create_scatter(player_metrics_df,
                    yaxis_title="",
                    annotations=[],
                    color_by=None):
-    """
-    Create scatter plot showing relationship between
-    choosing threatening passes and executing them.
-    """
+    """Create scatter plot"""
 
     colors, color_legend, = get_colors(
         player_metrics_df, color_by)
@@ -317,6 +319,7 @@ Completion Rate: {row['completed_perc']:.1f}%<br><br>
 
 
 def create_beeswarm(metrics):
+    """Create beeswarm plot"""
 
     plot_df = metrics.copy()
 
@@ -407,6 +410,7 @@ def create_beeswarm(metrics):
 
 
 def create_time_chart(filtered_possessions_bins, selected_player_id):
+    """Create time lines plot"""
 
     player_metrics = filtered_possessions_bins[filtered_possessions_bins['player_id']
                                                == selected_player_id]
@@ -542,6 +546,8 @@ def create_time_chart(filtered_possessions_bins, selected_player_id):
 
 
 def create_radar(filtered_stats, radar_metrics, player1, player2):
+    """Create radar plot"""
+
     radar_metric_labels = [metric_labels[key] for key in radar_metrics]
 
     player1_values = [player1[metric]

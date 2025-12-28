@@ -8,7 +8,7 @@ manager = DataManager()
 pe = PassingEvaluation()
 
 
-@st.cache_data()
+@st.cache_data(persist="disk")
 def load_data():
     all_events, all_pass_possessions = manager.get_data_with_passing_options()
     all_pass_possessions = pe.compute_metrics(all_pass_possessions)
@@ -24,14 +24,13 @@ def load_data():
     }
 
 
-@st.cache_data()
+@st.cache_data(persist="disk")
 def load_tracking_data(match_id):
     return manager.load_enriched_tracking_data(
         match_id)
 
 
 def load_data_with_filter(third="All"):
-
     data = load_data()
 
     data['filtered_possessions'] = pe.third_filter(

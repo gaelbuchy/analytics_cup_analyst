@@ -10,7 +10,7 @@ A common way to compare player decisions is looking at the xThreat created by ea
 
 Using SkillCorner's Dynamic Events Data and analyzing all available options in each pass situation, this dashboard provides tools to identify and compare how players make use of their passing opportunities.
 
-### Usecase(s)
+### Use case(s)
 
 **Player Scouting:**
 - Find players with good decision-making

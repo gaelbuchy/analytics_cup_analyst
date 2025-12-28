@@ -19,6 +19,7 @@ def create_tops_section(tab,
                         scatter_yaxis="",
                         annotations=[]
                         ):
+    """Create a tops session for the overview page"""
     tab.subheader(subheader)
     if caption is not None:
         tab.caption(caption)
@@ -81,6 +82,7 @@ def create_tops_section(tab,
 
 
 def show_legend(container, color_legend):
+    """Display the color legend"""
     if color_legend:
         container.markdown("**Color Legend**")
         container.caption(f"{color_legend['label']}:")
@@ -91,6 +93,7 @@ def show_legend(container, color_legend):
 
 
 def player_details_section(container, sp, df, key):
+    """Display the player details section with a link to the profile page"""
     container.markdown("Player Details")
     if sp and len(sp['selection']['points']) > 0:
         player_id = sp['selection']['points'][0]['customdata']['0']
@@ -109,6 +112,7 @@ def player_details_section(container, sp, df, key):
 
 
 def get_metrics_df(metrics, player1, player2):
+    """Format the metrics for comparison"""
     return pd.DataFrame({
         'Metric': [metric_labels[col] for col in metrics],
         player1['short_name']: [player1[col] for col in metrics],
@@ -117,6 +121,7 @@ def get_metrics_df(metrics, player1, player2):
 
 
 def check_player(player, id):
+    """Check if players has stats"""
     if not len(player):
         st.warning(f"No stats for Player {id}")
         st.stop()

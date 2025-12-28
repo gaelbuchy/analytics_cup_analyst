@@ -75,107 +75,108 @@ else:
         player2 = check_player(
             filtered_stats[filtered_stats["player_id"] == player2_id], player2_id)
 
-        tab1, tab2 = st.tabs(["🕸️ Radar Chart", "📊 Detailed Metrics"])
+        with st.spinner("Loading..."):
 
-        with tab1:
+            tab1, tab2 = st.tabs(["🕸️ Radar Chart", "📊 Detailed Metrics"])
 
-            # Define metrics for radar chart
-            radar_metrics = [
-                "decision_efficiency_p90",
-                "safest_pass_perc",
-                "completed_safest_pass_perc",
+            with tab1:
 
-                "highest_xthreat_pass_perc",
-                "completed_highest_xthreat_pass_perc",
+                # Define metrics for radar chart
+                radar_metrics = [
+                    "decision_efficiency_p90",
+                    "safest_pass_perc",
+                    "completed_safest_pass_perc",
 
-                "good_pass_opportunity_perc",
-                "completed_good_pass_opportunity_perc",
-            ]
+                    "highest_xthreat_pass_perc",
+                    "completed_highest_xthreat_pass_perc",
 
-            with st.spinner("Loading..."):
+                    "good_pass_opportunity_perc",
+                    "completed_good_pass_opportunity_perc",
+                ]
+
                 fig = create_radar(
                     filtered_stats, radar_metrics, player1, player2)
                 st.pyplot(fig, width=800)
 
-        with tab2:
-            basic_info = [
-                'team_shortname',
-                'player_position',
-                'event_id_count',
-            ]
+            with tab2:
+                basic_info = [
+                    'team_shortname',
+                    'player_position',
+                    'event_id_count',
+                ]
 
-            basic_df = get_metrics_df(basic_info, player1, player2)
+                basic_df = get_metrics_df(basic_info, player1, player2)
 
-            st.dataframe(basic_df, hide_index=True)
+                st.dataframe(basic_df, hide_index=True)
 
-            percentage_metrics = [
-                'decision_efficiency_p90',
-                'completed_perc',
-                'highest_xthreat_pass_perc',
-                'completed_highest_xthreat_pass_perc',
-                'has_good_pass_opportunities_perc',
-                'good_pass_opportunity_perc',
-                'completed_good_pass_opportunity_perc',
-                'safest_pass_perc',
-                'completed_safest_pass_perc',
-            ]
+                percentage_metrics = [
+                    'decision_efficiency_p90',
+                    'completed_perc',
+                    'highest_xthreat_pass_perc',
+                    'completed_highest_xthreat_pass_perc',
+                    'has_good_pass_opportunities_perc',
+                    'good_pass_opportunity_perc',
+                    'completed_good_pass_opportunity_perc',
+                    'safest_pass_perc',
+                    'completed_safest_pass_perc',
+                ]
 
-            perc_df = get_metrics_df(percentage_metrics, player1, player2)
+                perc_df = get_metrics_df(percentage_metrics, player1, player2)
 
-            st.dataframe(
-                perc_df,
-                column_config={
-                    "Metric": st.column_config.TextColumn("Metric", width="medium"),
-                    player1['short_name']: st.column_config.ProgressColumn(
-                        player1['short_name'],
-                        width="medium",
-                        format="%.2f%%",
-                        min_value=0,
-                        max_value=100,
-                        color="auto",
-                    ),
-                    player2['short_name']: st.column_config.ProgressColumn(
-                        player2['short_name'],
-                        width="medium",
-                        format="%.2f%%",
-                        min_value=0,
-                        max_value=100,
-                        color="auto",
-                    ),
-                },
-                hide_index=True,
-            )
+                st.dataframe(
+                    perc_df,
+                    column_config={
+                        "Metric": st.column_config.TextColumn("Metric", width="medium"),
+                        player1['short_name']: st.column_config.ProgressColumn(
+                            player1['short_name'],
+                            width="medium",
+                            format="%.2f%%",
+                            min_value=0,
+                            max_value=100,
+                            color="auto",
+                        ),
+                        player2['short_name']: st.column_config.ProgressColumn(
+                            player2['short_name'],
+                            width="medium",
+                            format="%.2f%%",
+                            min_value=0,
+                            max_value=100,
+                            color="auto",
+                        ),
+                    },
+                    hide_index=True,
+                )
 
-            p90_metrics = [
-                'xthreat_available_p90',
-                'player_targeted_xthreat_p90',
-                'missed_xthreat_p90',
-            ]
+                p90_metrics = [
+                    'xthreat_available_p90',
+                    'player_targeted_xthreat_p90',
+                    'missed_xthreat_p90',
+                ]
 
-            p90_df = get_metrics_df(p90_metrics, player1, player2)
+                p90_df = get_metrics_df(p90_metrics, player1, player2)
 
-            max_val = filtered_stats['xthreat_available_p90'].max()
+                max_val = filtered_stats['xthreat_available_p90'].max()
 
-            st.dataframe(
-                p90_df,
-                column_config={
-                    "Metric": st.column_config.TextColumn("Metric", width="medium"),
-                    player1['short_name']: st.column_config.ProgressColumn(
-                        player1['short_name'],
-                        width="medium",
-                        format="%.2f",
-                        min_value=0,
-                        max_value=max_val,
-                        color="auto",
-                    ),
-                    player2['short_name']: st.column_config.ProgressColumn(
-                        player2['short_name'],
-                        width="medium",
-                        format="%.2f",
-                        min_value=0,
-                        max_value=max_val,
-                        color="auto",
-                    ),
-                },
-                hide_index=True,
-            )
+                st.dataframe(
+                    p90_df,
+                    column_config={
+                        "Metric": st.column_config.TextColumn("Metric", width="medium"),
+                        player1['short_name']: st.column_config.ProgressColumn(
+                            player1['short_name'],
+                            width="medium",
+                            format="%.2f",
+                            min_value=0,
+                            max_value=max_val,
+                            color="auto",
+                        ),
+                        player2['short_name']: st.column_config.ProgressColumn(
+                            player2['short_name'],
+                            width="medium",
+                            format="%.2f",
+                            min_value=0,
+                            max_value=max_val,
+                            color="auto",
+                        ),
+                    },
+                    hide_index=True,
+                )

@@ -25,6 +25,7 @@ class DataManager:
 
     def load_tracking_data(self, match_id):
         """Load and preprocess tracking data for a given match ID."""
+
         raw_data = pd.read_json(
             f"https://media.githubusercontent.com/media/SkillCorner/opendata/refs/heads/master/data/matches/{match_id}/{match_id}_tracking_extrapolated.jsonl", lines=True
         )
@@ -187,6 +188,7 @@ class DataManager:
 
     def load_match_events(self, match_id):
         """Load dynamic events for match_id"""
+
         path = f"{self.data_dir}match_{match_id}_events.parquet.gzip"
 
         if self.cache and os.path.exists(path):
@@ -205,6 +207,7 @@ class DataManager:
 
     def concatenate_all_matches_events(self):
         """Get events for all matches"""
+
         df_list = []
         for i in self.match_ids:
             t = self.load_match_events(i)
@@ -214,6 +217,7 @@ class DataManager:
 
     def concatenate_all_matches_data(self):
         """Get all matches data"""
+
         df_list = []
         for i in self.match_ids:
             t = self.load_player_data(i)
@@ -223,6 +227,7 @@ class DataManager:
 
     def add_pass_options(self, all_events, possessions):
         """Add passing options to possessions"""
+
         possessions["passing_options"] = None
 
         for id in possessions.index:
@@ -241,6 +246,7 @@ class DataManager:
 
     def add_position_category(self, events):
         """Add position category"""
+
         position_to_category = {
             'GK': 'Keeper',
             'LB': 'Defender', 'RB': 'Defender', 'LCB': 'Defender', 'RCB': 'Defender',

@@ -6,22 +6,16 @@ from src.utils.log import log_message
 metric_labels = {
     'safest_pass': 'Safest Pass',
     'highest_xthreat_pass': 'Highest xThreat Pass',
-
     'has_good_pass_opportunities': 'Has Good Opportunities',
     'good_pass_opportunity': 'Is Good Opportunity',
     'missed_good_pass_opportunity': 'Missed Good Opportunity',
-
     'xthreat_available': 'xThreat Available',
     'missed_xthreat': 'Missed xThreat',
     "decision_efficiency": "Decision Efficiency",
-
     'x_xthreat_best': 'Expected xThreat Best',
     'x_xthreat_avg': 'Expected xThreat Average',
-
     'options_count': 'Options Count',
-
     'better_x_xthreats_count': 'Better Expected xThreat Count ',
-
     'safest_pass_perc': "Safest Pass %",
     'safest_pass_sum': "Safest Pass Count",
     "highest_xthreat_pass_perc": "Highest xThreat Pass %",
@@ -53,17 +47,14 @@ metric_labels = {
     'team_shortname': "Team",
     'short_name': "Player Name",
     'player_id': "Player ID",
-
     "xthreat_available_p90": "xThreat Available (P90)",
     "player_targeted_xthreat_p90": "xThreat Created (P90)",
     "missed_xthreat_p90": "Missed xThreat (P90)",
     "decision_efficiency_p90": "Decision Efficiency (P90)",
-
     "xthreat_available_p90_mean": "Average xThreat Available (P90)",
     "player_targeted_xthreat_p90_mean": "Average xThreat Created (P90)",
     "efficiency_p90": "Average Decision Efficiency (P90)",
     "highest_xthreat_pass_perc_mean": "Average Highest xThreat",
-
     "has_good_pass_opportunities_mean": "Good Opportunities Available On Average",
     "good_pass_opportunity_mean": "Average Good Opportunity",
     "missed_good_pass_opportunity_mean": "Missed Good Opportunity On Average",
@@ -131,6 +122,7 @@ class PassingEvaluation:
         self.realistic_xthreat_threshold = .4
 
     def init_xthreat_threshold(self, df):
+        """Set the xhtreat theshold to the upper quartile"""
         if self.good_xthreat_threshold is None:
             # get upper quartile from data
             self.good_xthreat_threshold = df['player_targeted_xthreat'].describe()[
@@ -192,14 +184,7 @@ class PassingEvaluation:
         return xpass >= self.good_xpass_threshold and xthreat >= self.good_xthreat_threshold
 
     def xthreat_available(self, options):
-        """Calculate the maximum xThreat among realistic options.
-
-            Args:
-                options: List of dicts with 'xthreat' and 'completion_prob' keys
-
-            Returns:
-                float: Maximum xThreat where completion_prob >= 0.40
-        """
+        """Calculate the maximum xThreat among realistic options"""
         realistic_options = [
             opt['xthreat']
             for opt in options
@@ -269,6 +254,8 @@ class PassingEvaluation:
         }
 
     def group_by_players(self, df, minutes):
+        """Group data by players"""
+
         df['completed'] = (df['pass_outcome'] == 'successful').astype(int)
         df['completed_safest_pass'] = (df['completed'] & df['safest_pass'])
         df['completed_highest_xthreat_pass'] = (
@@ -368,14 +355,7 @@ class PassingEvaluation:
         return df_merged
 
     def get_metrics(self, df):
-        """Calculate league-wide metrics from aggregated player data.
-
-        Args:
-            df: DataFrame with aggregated player statistics (output of group_by_players)
-
-        Returns:
-            dict: Dictionary containing league-wide metrics
-        """
+        """Calculate league-wide metrics from aggregated player data"""
         metrics = {
             'xthreat_available_p90_mean': df['xthreat_available_p90'].mean(),
             'player_targeted_xthreat_p90_mean': df['player_targeted_xthreat_p90'].mean(),
@@ -392,6 +372,7 @@ class PassingEvaluation:
         return metrics
 
     def time_bins(self, df):
+        """Add time bins"""
         # Create time bins
         time_bins = [0, 15, 30, 45, 60, 75, 120]
         time_labels = ['0-15', '15-30', '30-45',
@@ -409,6 +390,7 @@ class PassingEvaluation:
         return df_with_bins
 
     def third_filter(self, df, third):
+        """Filter by third part of the pitch"""
         filtered = df.copy()
 
         if third != "All":
@@ -419,11 +401,7 @@ class PassingEvaluation:
         return filtered
 
     def page_filter(self, df, selected_teams, selected_categories, selected_positions, min_passes):
-        """Filter aggregated player data based on teams, positions, and minimum passes.
-
-        Returns:
-            Filtered DataFrame
-        """
+        """Filter aggregated player data based on teams, positions, and minimum passes"""
         filtered = df.copy()
 
         # Filter by teams
