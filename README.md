@@ -2,7 +2,7 @@
 
 ## Player Passing Decision Quality Analysis
 
-#### Introduction
+### Introduction
 
 This project is an interactive dashboard for analyzing player passing decisions. With new metrics and event data available for player possessions, we can now add context when evaluating passes and uncover new insights.
 
@@ -10,7 +10,7 @@ A common way to compare player decisions is looking at the xThreat created by ea
 
 Using SkillCorner's Dynamic Events Data and analyzing all available options in each pass situation, this dashboard provides tools to identify and compare how players make use of their passing opportunities.
 
-#### Usecase(s)
+### Usecase(s)
 
 **Player Scouting:**
 - Find players with good decision-making
@@ -24,7 +24,7 @@ Using SkillCorner's Dynamic Events Data and analyzing all available options in e
 - Find patterns and weaknesses in decision-making
 
 
-#### Potential Audience
+### Potential Audience
 
 - **Football Clubs:** Performance analysts, recruitment teams, coaching staff
 - **Media:** Data visualizations
@@ -63,3 +63,4 @@ streamlit run main.py
 
 ## URL to Web App
 
+https://analytics-cup-analyst-player-passing-decisions.streamlit.app/
