@@ -205,3 +205,10 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+cache/*
+
+app.log
+
+# But keep the cache folder itself
+!cache/.gitkeep
